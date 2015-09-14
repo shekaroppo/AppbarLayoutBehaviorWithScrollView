@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -55,14 +54,8 @@ public class FlexibleSpaceWithImageScrollViewActivity extends AppCompatActivity 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
         ButterKnife.bind(this);
-        // getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-
 
         setSupportActionBar(mToolbarView);
-        // Set the padding to match the Status Bar height
-        //mToolbarView.setPadding(0, getStatusBarHeight(), 0, 0);
-
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,7 +63,6 @@ public class FlexibleSpaceWithImageScrollViewActivity extends AppCompatActivity 
 
         if (mToolbarView != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //getWindow().setStatusBarColor(Color.TRANSPARENT);
                 getWindow().getDecorView().setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
             }
@@ -81,21 +73,8 @@ public class FlexibleSpaceWithImageScrollViewActivity extends AppCompatActivity 
             getSupportActionBar().setTitle("");
         }
 
-//        Window window = getWindow();
-//
-//// clear FLAG_TRANSLUCENT_STATUS flag:
-//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//
-//// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//
-//// finally change the color
-//        window.setStatusBarColor(Color.TRANSPARENT);
-
-
         mTitleView.setText(getTitle());
         setTitle(null);
-
 
         mFlexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
         mFlexibleSpaceShowFabOffset = getResources().getDimensionPixelSize(R.dimen.flexible_space_show_fab_offset);
@@ -112,13 +91,6 @@ public class FlexibleSpaceWithImageScrollViewActivity extends AppCompatActivity 
         mFabMargin = getResources().getDimensionPixelSize(R.dimen.margin_standard);
         mFab.setScaleX(0);
         mFab.setScaleY(0);
-
-//        Bitmap bitmap = ((BitmapDrawable) mImageView.getDrawable()).getBitmap();
-//        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-//            public void onGenerated(Palette palette) {
-//                applyPalette(palette);
-//            }
-//        });
 
         ScrollUtils.addOnGlobalLayoutListener(mScrollView, new Runnable() {
             @Override
@@ -137,11 +109,6 @@ public class FlexibleSpaceWithImageScrollViewActivity extends AppCompatActivity 
                 //mScrollView.scrollTo(0, 0);
             }
         });
-    }
-
-    private void applyPalette(Palette palette) {
-        int primaryDark = getResources().getColor(R.color.primary_dark);
-        WindowCompatUtils.setStatusBarcolor(getWindow(), palette.getDarkMutedColor(primaryDark));
     }
 
     // A method to find height of the status bar
@@ -178,10 +145,6 @@ public class FlexibleSpaceWithImageScrollViewActivity extends AppCompatActivity 
         int minOverlayTransitionY = mActionBarSize - mImageView.getHeight();
         mImageView.setTranslationY(ScrollUtils.getFloat(-scrollY/2, minOverlayTransitionY, 0));
 
-        // Change alpha of overlay
-        // mOverlayView.setAlpha( ScrollUtils.getFloat((float) scrollY / flexibleRange, 0, 1));
-        // mToolbarView.setAlpha( ScrollUtils.getFloat((float) scrollY / mFlexibleSpaceImageHeight, 0, 1));
-
         // Scale title text
         float scale = 1 + ScrollUtils.getFloat((flexibleRange - scrollY) / flexibleRange, 0, MAX_TEXT_SCALE_DELTA);
         mTitleView.setPivotX(0);
@@ -191,32 +154,9 @@ public class FlexibleSpaceWithImageScrollViewActivity extends AppCompatActivity 
 
         overlayView.setTranslationY(ScrollUtils.getFloat(-scrollY, minOverlayTransitionY, 0));
 
-//        double alpha = (1 - (((double) flexibleRange - (double) scrollY) / (double) flexibleRange)) * 255.0;
-//        alpha = alpha < 0 ? 0 : alpha;
-//        alpha = alpha > 100 ? 100 : alpha;
-//        Log.d("alpha==", alpha + "");
-//        float scrollRatio = (float) (alpha / 100);
-//        getWindow().setStatusBarColor(getAlphaColor(Color.TRANSPARENT,scrollRatio));
-
-
-//        Log.d("flexibleRange==", flexibleRange + "");
-//        Log.d("scrollY==", scrollY + "");
-//        Log.d("scale==", scale + "");
-//        Log.d("min==", (flexibleRange - scrollY) / flexibleRange + "");
-
-
-        double alpha = (1 - (((double) flexibleRange - (double) scrollY) / (double) flexibleRange)) * 255.0;
-        alpha = alpha < 0 ? 0 : alpha;
-        alpha = alpha > 50 ? 50 : alpha;
-        float scrollRatio = (float) (alpha / 50);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            getWindow().setStatusBarColor(Utils.getAlphaColor(Color.TRANSPARENT, scrollRatio));
-//        }
-
-
         // Translate title text
         int maxTitleTranslationY = (int) (mFlexibleSpaceImageHeight - mTitleView.getHeight() * scale);
-        int titleTranslationY = maxTitleTranslationY - scrollY > getStatusBarHeight() ? maxTitleTranslationY - scrollY : getStatusBarHeight();
+        int titleTranslationY = Math.max(maxTitleTranslationY - scrollY,getStatusBarHeight());
 
         mTitleView.setTranslationY(titleTranslationY);
 
