@@ -1,4 +1,4 @@
-package com.shekar.appbarlayoutbehaviorwithscrollview.ScrollUtils;
+package com.shekar.appbarlayoutbehaviorwithscrollview.scrollutils;
 
 /**
  * Callbacks for Scrollable widgets.

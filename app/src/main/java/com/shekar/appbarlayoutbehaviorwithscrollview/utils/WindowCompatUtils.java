@@ -1,4 +1,4 @@
-package com.shekar.appbarlayoutbehaviorwithscrollview;
+package com.shekar.appbarlayoutbehaviorwithscrollview.utils;
 
 import android.annotation.TargetApi;
 import android.os.Build;

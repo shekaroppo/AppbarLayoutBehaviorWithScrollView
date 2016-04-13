@@ -1,4 +1,4 @@
-package com.shekar.appbarlayoutbehaviorwithscrollview.ScrollUtils;
+package com.shekar.appbarlayoutbehaviorwithscrollview.scrollutils;
 
 /**
  * Constants that indicates the scroll state of the Scrollable widgets.

@@ -26,7 +26,10 @@ import com.shekar.appbarlayoutbehaviorwithscrollview.scrollutils.ScrollUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class FlexibleSpaceWithImageScrollViewActivity extends AppCompatActivity implements ObservableScrollViewCallbacks {
+/**
+ * Created by Shekar on 4/13/16.
+ */
+public class PlaidDetailScreen extends AppCompatActivity implements ObservableScrollViewCallbacks {
 
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
 
@@ -52,7 +55,7 @@ public class FlexibleSpaceWithImageScrollViewActivity extends AppCompatActivity 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detail_screen_with_flexible_space);
+        setContentView(R.layout.plaid_detail_screen);
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbarView);
@@ -85,7 +88,7 @@ public class FlexibleSpaceWithImageScrollViewActivity extends AppCompatActivity 
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(FlexibleSpaceWithImageScrollViewActivity.this, "FAB is clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlaidDetailScreen.this, "FAB is clicked", Toast.LENGTH_SHORT).show();
             }
         });
         mFabMargin = getResources().getDimensionPixelSize(R.dimen.margin_standard);

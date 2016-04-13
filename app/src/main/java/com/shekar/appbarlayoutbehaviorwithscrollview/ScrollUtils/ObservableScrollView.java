@@ -1,4 +1,4 @@
-package com.shekar.appbarlayoutbehaviorwithscrollview.ScrollUtils;
+package com.shekar.appbarlayoutbehaviorwithscrollview.scrollutils;
 
 import android.content.Context;
 import android.os.Parcel;
